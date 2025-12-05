@@ -7,7 +7,7 @@ var highest_y = 0.0
 func _ready():
 	highest_y = global_position.y #Começa na posição atual
 	
-func _process(delta):
+func _process(_delta):
 	if player == null:
 		return
 		
