@@ -1,7 +1,9 @@
 # 🎮 Doodle Jump — Godot 4 (Projeto de Estudo)
 
 Bem-vindo(a) ao meu projeto Doodle Jump em Godot 4!
-Este jogo é parte dos meus estudos de desenvolvimento de jogos e programação usando a Godot Engine.
+
+Este jogo é parte dos meus estudos de desenvolvimento de jogos e programação usando a Godot Engine, com ajuda das aulas do professor Clécio Espindola.
+
 Cada script e mecânica implementada faz parte do meu aprendizado diário. 💖✨
 
 ## 🌟 Sobre o projeto
