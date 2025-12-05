@@ -80,6 +80,7 @@ Aqui estudo:
 - Colocar partículas
 - Adicionar HUD (Score)
 - Tela de game over
+- Exportar o jogo para HTML5
 - Publicar uma demo online 😍
 
 ## 💖 Autora
