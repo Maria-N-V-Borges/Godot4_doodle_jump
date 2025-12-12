@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://uwbqx3pf5v35"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_57uvx"]
+[ext_resource type="Texture2D" uid="uid://dxdat1fp5l6yt" path="res://assets/Tiles/Characters/tile_0003.png" id="1_cmd8s"]
+[ext_resource type="Texture2D" uid="uid://cswcxhrwrg1k0" path="res://assets/Tiles/Characters/tile_0002.png" id="2_4ai7a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b6jf2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_cmd8s")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4ai7a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5g8tw"]
+size = Vector2(14, 23)
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_57uvx")
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_b6jf2")
+animation = &"fall"
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11.5)
+shape = SubResource("RectangleShape2D_5g8tw")
