@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://c86668qka706y"]
+
+[ext_resource type="PackedScene" uid="uid://uwbqx3pf5v35" path="res://actors/player_blue.tscn" id="1_aufk5"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_g0ds2"]
+[ext_resource type="PackedScene" uid="uid://c5v3xjtr2e6v5" path="res://plataforms/platform.tscn" id="2_eegqk"]
+[ext_resource type="PackedScene" uid="uid://bmh57tc660lux" path="res://plataforms/spring_platform.tscn" id="3_dnq6u"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="4_62lmv"]
+[ext_resource type="PackedScene" uid="uid://dykr3w4505vqx" path="res://plataforms/cloud_platform.tscn" id="4_hrq8i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li5if"]
+size = Vector2(179, 20)
+
+[node name="doodle_jump" type="Node2D"]
+script = ExtResource("1_g0ds2")
+platform_scene = Array[PackedScene]([ExtResource("2_eegqk"), ExtResource("3_dnq6u"), ExtResource("4_hrq8i")])
+
+[node name="platform_container" type="Node2D" parent="."]
+
+[node name="platform" parent="platform_container" instance=ExtResource("2_eegqk")]
+position = Vector2(90, 280)
+
+[node name="player" parent="." instance=ExtResource("1_aufk5")]
+position = Vector2(90, 160)
+
+[node name="camera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(90, 160)
+limit_smoothed = true
+script = ExtResource("4_62lmv")
+player = NodePath("../player")
+
+[node name="platform_cleaner" type="Area2D" parent="camera"]
+
+[node name="collision" type="CollisionShape2D" parent="camera/platform_cleaner"]
+position = Vector2(0.5, 182)
+shape = SubResource("RectangleShape2D_li5if")
+
+[connection signal="body_entered" from="camera/platform_cleaner" to="." method="_on_platform_cleaner_body_entered"]
