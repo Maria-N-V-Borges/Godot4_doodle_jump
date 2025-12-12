@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5v3xjtr2e6v5"]
+
+[ext_resource type="Script" path="res://scripts/platform.gd" id="1_c4fhr"]
+[ext_resource type="Texture2D" uid="uid://5bjisqmwyaei" path="res://assets/Tiles/tile_0001.png" id="1_ryipg"]
+[ext_resource type="Texture2D" uid="uid://csyb6l52ekyed" path="res://assets/Tiles/tile_0003.png" id="2_auppa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bsby8"]
+size = Vector2(36, 18)
+
+[node name="plataform" type="StaticBody2D" groups=["platform"]]
+script = ExtResource("1_c4fhr")
+jump_force = 1.0
+
+[node name="left_block" type="Sprite2D" parent="."]
+position = Vector2(-9, 1)
+texture = ExtResource("1_ryipg")
+
+[node name="right_block" type="Sprite2D" parent="."]
+position = Vector2(9, 1)
+texture = ExtResource("2_auppa")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_bsby8")
+one_way_collision = true
