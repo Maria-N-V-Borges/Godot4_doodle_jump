@@ -10,6 +10,9 @@ extends Node2D
 
 @onready var screen_size = get_viewport().get_visible_rect().size
 
+@onready var score_label = $camera/score #score_label facilita o uso no código
+var start_y := 0.0
+
 var last_y: float
 var last_x = -9999.0
 var min_horizontal_distance = 60.0
@@ -19,6 +22,16 @@ func _ready():
 	last_y = platform_initial_position_y
 	level_generator(num_platforms) #Gera a quantidde inicial de plataformas
 	
+	start_y = $player.position.y
+	$player.connect("height_changed", Callable(self, "_on_player_height_changed"))
+	#Sempre que o player emitir height_changed, essa função será chamada
+
+	# new_y vem do sinal
+	# É a nova maior altura do player
+func _on_player_height_changed(new_y): 
+	var distance = start_y - new_y #Quanto mais sobe → maior score. Nunca diminui
+	var score = int(distance) #Converte para inteiro. Score não precisa de casas decimais
+	score_label.text = str(score) #Atualiza o Label na tela
 	
 func level_generator(amount: int):
 	for i in range(amount):
