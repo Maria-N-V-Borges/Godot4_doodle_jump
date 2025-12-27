@@ -7,6 +7,9 @@ var jump_force = 400
 #aceleração vertical — afeta a queda com realismo.
 const GRAVITY = 500
 
+var highest_y := INF #INF é infinito
+signal height_changed(new_height)
+
 #@onready: Executa a linha depois que o node estiver pronto no cenário, perfeito pra acessar nodes internos com get_node() sem erro.
 #Pega o tamanho da tela do jogo visível no momento. Muito útil pra limitar o movimento do player horizontalmente!
 @onready var anim = $anim as AnimatedSprite2D
@@ -37,10 +40,15 @@ func _physics_process(delta):
 	
 		#método direto que retorna colisão
 	var collision = move_and_collide(velocity * delta)
-
-#Animações automáticas baseadas no movimento vertical:
-#fall: caindo (quando a velocidade vertical é positiva).
-#idle: flutuando ou parado no ar.
+	
+	#Guarda a maior altura alcaçada 
+	if position.y < highest_y: #Se o Y atual for menor, significa que subiu mais
+		highest_y = position.y
+		emit_signal("height_changed", highest_y)
+		
+	#Animações automáticas baseadas no movimento vertical:
+	#fall: caindo (quando a velocidade vertical é positiva).
+	#idle: flutuando ou parado no ar.
 	if velocity.y > 0:
 		anim.play("fall")
 	else:
