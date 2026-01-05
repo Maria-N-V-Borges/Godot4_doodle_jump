@@ -17,6 +17,8 @@ var last_y: float
 var last_x = -9999.0
 var min_horizontal_distance = 60.0
 
+var last_was_enemy := false
+
 func _ready():
 	randomize()
 	last_y = platform_initial_position_y
@@ -35,7 +37,7 @@ func _on_player_height_changed(new_y):
 	
 func level_generator(amount: int):
 	for i in range(amount):
-		var new_type = randi() % 3
+		var new_type = randi() % 4
 		
 		# sobe a plataforma (números negativos sobem)
 		last_y -= randf_range(36.0, 54.0)
@@ -51,15 +53,24 @@ func level_generator(amount: int):
 		elif new_type == 2:
 			new_platform = platform_scene[2].instantiate()
 			new_platform.delete_object.connect(self.delete_object)
-			
+		elif new_type == 3:
+			if last_was_enemy == false:
+				new_platform = platform_scene[3].instantiate()
+				last_was_enemy = true
+			else: 
+				new_platform = platform_scene[0].instantiate()
+				last_was_enemy = false
 			
 		if new_type != null:
 			new_platform.position = Vector2(x, last_y)
 			platform_container.call_deferred("add_child", new_platform) #Use call_deferred para evitar bugs cso algum nó esteja sendo remido no mesmo frame
 
 func delete_object(obstacle):
-	obstacle.queue_free()
-	level_generator(1)	
+	if obstacle.is_in_group("player"):
+		print("foi o player")
+	elif obstacle.is_in_group("platform") or obstacle.is_in_group("enemies"):
+		obstacle.queue_free()
+		level_generator(1)	
 	
 
 func _on_platform_cleaner_body_entered(body):
