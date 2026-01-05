@@ -65,7 +65,6 @@ func _physics_process(delta):
 				# Ajusta a força final com o jump_force da plataforma
 				velocity.y = -jump_force * float(collider.jump_force)
 
-				
 				if collider.has_method("response"):
 					collider.response()
 	
@@ -73,3 +72,5 @@ func _physics_process(delta):
 	#Se sair pela esquerda, aparece na direita. Se sair pela direita, aparece na esquerda.
 	position.x = wrapf(position.x, 0, screen_size.x)
 	
+func game_over():
+		get_tree().reload_current_scene()
