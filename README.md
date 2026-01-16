@@ -1,122 +1,173 @@
 # 🎮 Doodle Jump — Godot 4 (Projeto de Estudo)
 
-Bem-vindo(a) ao meu projeto Doodle Jump em Godot 4!
+Bem-vindo(a) ao meu projeto **Doodle Jump em Godot 4**!
 
-Este jogo faz parte dos meus estudos contínuos de desenvolvimento de jogos e programação usando a Godot Engine, com a orientação das aulas do professor Clécio Espindola.
+Este jogo faz parte dos meus estudos contínuos de **desenvolvimento de jogos e programação**, com base nas aulas do professor **Clécio Espíndola**, adaptadas da Godot 3 para a **Godot 4**.
 
-Cada sistema implementado representa mais uma etapa da minha evolução. 💖✨
+Cada sistema implementado representa mais um passo na minha evolução como desenvolvedora. 💖✨
+
+---
 
 ## 🌟 Sobre o projeto
 
-Este é um jogo estilo Doodle Jump, onde o personagem quica em plataformas enquanto sobe infinitamente.
+Este é um jogo estilo **Doodle Jump**, onde o personagem sobe infinitamente pulando em plataformas, desviando de inimigos e lidando com desafios progressivos conforme a pontuação aumenta.
 
-Aqui estudo:
+Neste projeto, estudo e aplico conceitos fundamentais de **game development**, **lógica**, **física**, **arquitetura de cenas** e **boas práticas em Godot 4**.
+
+---
+
+## 🧠 Conceitos e Tecnologias Estudadas
 
 - 🧩 Física 2D
-- 👣 Movimentação com CharacterBody2D
-- 🎞 Animações com AnimatedSprite2D
+- 👣 Movimentação com `CharacterBody2D`
+- 🎞 Animações com `AnimatedSprite2D`
 - 🏗 Geração procedural de plataformas
 - 📚 Herança entre scripts
 - 📡 Sinais personalizados
-- 🎥 Câmera que segue apenas quando o jogador sobe
-- 🔄 Adaptações de Godot 3 → Godot 4 (pois as aulas do professor são da versão 3)
+- 🎥 Câmera inteligente (sobe, mas não desce)
+- 🧱 Camadas e Máscaras de colisão (Layers & Masks)
+- 👾 Sistema de inimigos
+- 🧹 Platform Cleaner (remoção de objetos fora da tela)
+- 🔄 Adaptação de projetos da Godot 3 → Godot 4
 
- ## 🕹 Mecânicas Implementadas
-### ✔️ Movimentação do Player
-- Movimento horizontal suave usando lerpf
-- Gravidade realista (com delta)
+---
+
+## 🕹 Mecânicas Implementadas
+
+### ✔️ Player
+- Movimento horizontal suave com `lerpf`
+- Gravidade realista usando `delta`
 - Pulo automático ao colidir com plataformas
-- Detecção de colisão com layer masks
-- Wrap horizontal (teletransporte pelas laterais)
-- Suporte a múltiplas teclas: ←/→, 4/6
+- Detecção de colisão usando **layers e masks**
+- Wrap horizontal (teleporte pelas laterais)
+- Múltiplos esquemas de controle (←/→, 4/6)
+- Emissão de sinal de altura máxima (`height_changed`)
+- Sistema de morte e reinício de cena
 
-### Sistema de Plataformas
-#### 🧱 Plataforma Base (platform.gd)
+---
+
+### 🧱 Sistema de Plataformas
+
+#### 🟩 Plataforma Base (`platform.gd`)
 - Script pai usando herança
-- Variável jump_force exportada, permitindo plataformas com alturas de pulo diferentes
-- Sinal delete_object para remover plataformas dinamicamente
+- Variável `jump_force` exportada
+- Sinal `delete_object` para remoção dinâmica
 
-#### ☁️ Cloud Platform (nuvem)
-- Some quando o player pula sobre ela
-- Player passa por baixo sem travar
-- jump_force = 1.0
+#### ☁️ Cloud Platform (Nuvem)
+- Surge apenas após certa pontuação
+- Some após ser usada
+- Player atravessa por baixo
+- `jump_force = 1.0`
 
-#### 🌀 Spring Platform (mola)
-- Faz o jogador saltar mais alto
-- jump_force = 1.5
+#### 🌀 Spring Platform (Mola)
+- Aumenta a altura do pulo
+- `jump_force = 1.5`
+- Player pode atravessar por baixo
 
- #### 🏗 Geração Procedural
-- Plataformas aparecem automaticamente acima conforme o jogador sobe
-- Alturas e posições horizontais aleatórias
-- Quando uma plataforma sai da tela, uma nova é criada acima
+---
 
-### ✔️ Câmera Inteligente
-- Acompanha somente quando o jogador sobe
-- Garante estabilidade visual
-- Não desce com o jogador
-- Mantém eixo X fixo
+### 👾 Inimigos
+- Surgem apenas após atingir uma pontuação mínima
+- Movimento lateral automático
+- Colisão separada entre cabeça e corpo
+- Player:
+  - Derrota o inimigo ao pisar por cima
+  - Morre ao colidir lateralmente
+- Controle de spawn para evitar inimigos consecutivos
 
-## 📂 Scripts 
-### game.gd
-- Instancia plataformas proceduralmente
-- Mantém o container organizado
-- Controla espaçamento vertical
-- Reposiciona novas plataformas quando antigas são removidas
+---
 
-### player.gd
-- Movimento, gravidade, colisões e animação
-- Lógica completa do pulo integrado ao jump_force da plataforma
-- Verifica colisões apenas quando caindo
-- Teleporte horizontal estilo “portal”
+### 🧹 Platform Cleaner
+- Área invisível abaixo da tela
+- Remove plataformas, nuvens e inimigos que saem do campo de visão
+- Detecta quando o **player cai**, reiniciando o jogo
+- Sistema baseado em **groups + collision layers**
 
-### platform.gd (script pai)
-- Define jump_force
-- Envia sinal para remoção da plataforma
-- Base para herança de outros tipos
+---
 
-### cloud_platform.gd
-- Herda de platform.gd
-- Some ao ser usada
-- Permite passar por baixo
+### 🏗 Geração Procedural
+- Plataformas surgem conforme o jogador sobe
+- Altura e posição horizontal aleatórias
+- Progressão baseada no score:
+  - ⛅ Nuvens surgem após **500 pontos**
+  - 👾 Inimigos surgem após **1000 pontos**
 
-### spring_platform.gd
-- Herda de platform.gd
-- Aumenta altura do pulo
-- Também permite passar por baixo
+---
 
-### camera.gd
-- Segue apenas o maior ponto alcançado pelo jogador
-- Suaviza a experiência
-- Garante que o jogador veja sempre mais para cima
+### 🎥 Câmera Inteligente
+- Segue apenas quando o jogador sobe
+- Não desce junto com o player
+- Mantém estabilidade visual
+- Eixo X fixo
 
-## 📖 O que estou aprendendo
+---
 
-- Diferenças entre Godot 3 e 4
-- Usar CharacterBody2D no lugar do antigo KinematicBody2D
-- Criar herança entre scripts
-- Criar e emitir sinais personalizados
-- Ajustar colisões usando layers e masks
-- Permitir que o player atravesse a plataforma por baixo
-- Tornar plataformas destruíveis
-- Criar plataformas com comportamentos diferentes usando jump_force
-- Organizar cenas com nós pais e filhos
-- Criar lógica de geração procedural
-- Fazer depuração e resolver bugs de colisão
-- Criar múltiplos esquemas de controle (teclado, setas, números)
-  
+## 📂 Scripts Principais
+
+### `game.gd`
+- Geração procedural de plataformas
+- Controle de progressão por score
+- Gerenciamento do platform cleaner
+- Atualização do score
+- Spawn controlado de inimigos e nuvens
+
+### `player.gd`
+- Movimento, gravidade e colisões
+- Interação com plataformas e inimigos
+- Sistema de morte e reinício
+- Emissão de sinais de altura
+
+### `platform.gd` (script pai)
+- Define `jump_force`
+- Base para herança
+- Emite sinal de remoção
+
+### `cloud_platform.gd`
+- Plataforma temporária
+- Some ao ser utilizada
+
+### `spring_platform.gd`
+- Plataforma de impulso
+- Aumenta o pulo
+
+### `enemy.gd`
+- Movimento automático
+- Detecção separada de cabeça e corpo
+- Lógica de morte do inimigo e do player
+
+### `camera.gd`
+- Segue apenas a maior altura alcançada
+- Garante foco no progresso do jogador
+
+---
+
+## 📖 O que estou aprendendo na prática
+
+- Uso correto de **collision layers e masks**
+- Diferença entre colisão física e lógica de jogo
+- Organização de cenas e scripts
+- Progressão de dificuldade baseada em score
+- Comunicação entre nós usando sinais
+- Debug e correção de bugs complexos
+- Estruturação de um jogo completo em Godot 4
+
+---
+
 ## 🚀 Próximos passos
-- Criar inimigos
-- Adicionar efeitos de partículas
-- Colocar HUD (score e melhor altura)
-- Criar power-ups especiais
-- Criar tela de pausa e game over
-- Exportar o jogo para HTML5
-- Publicar uma demo online 😍
-  
+
+- Melhorar IA dos inimigos
+- Adicionar partículas e efeitos visuais
+- Criar HUD completo (score e recorde)
+- Power-ups especiais
+- Tela de pause e game over
+- Exportar para HTML5
+- Publicar uma demo jogável online 😍
+
+---
+
 ## 💖 Autora
 
-**Maria N. V. Borges**
+**Maria N. V. Borges**  
+Estudante de Ciência da Computação apaixonada por **Godot**, **jogos** e **programação**.
 
-Estudante de Ciência da Computação apaixonada por Godot, jogos e programação.
-
-Se quiser sugerir melhorias, abrir uma issue ou mandar ideias, fique à vontade! ✨
+Sugestões, ideias e feedbacks são sempre bem-vindos! ✨
