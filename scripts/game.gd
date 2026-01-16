@@ -19,6 +19,9 @@ var min_horizontal_distance = 60.0
 
 var last_was_enemy := false
 
+var clouds_enabled := false
+var enemies_enabled := false
+
 func _ready():
 	randomize()
 	last_y = platform_initial_position_y
@@ -35,9 +38,27 @@ func _on_player_height_changed(new_y):
 	var score = int(distance) #Converte para inteiro. Score não precisa de casas decimais
 	score_label.text = str(score) #Atualiza o Label na tela
 	
+	# Ativa nuvens
+	if score >= 500 and not clouds_enabled:
+		clouds_enabled = true
+		print("Nuvens liberadas!")
+		
+	# Ativa inimigos
+	if score >= 1000 and not enemies_enabled:
+		enemies_enabled = true
+		print("Inimigos liberados!")
+	
 func level_generator(amount: int):
 	for i in range(amount):
 		var new_type = randi() % 4
+		
+		# Bloqueia nuvens antes de 500 pontos
+		if new_type == 2 and not clouds_enabled:
+			new_type = 0
+		
+		# Bloqueia inimigos antes de 1000 pontos
+		if new_type == 3 and not enemies_enabled:
+			new_type = 0
 		
 		# sobe a plataforma (números negativos sobem)
 		last_y -= randf_range(36.0, 54.0)
@@ -46,14 +67,14 @@ func level_generator(amount: int):
 		
 		var new_platform 
 		
-		if new_type == 0: 
+		if new_type == 0: # 0 = plataforma normal
 			new_platform = platform_scene[0].instantiate()
-		elif new_type == 1:
+		elif new_type == 1: # 1 = spring_platform
 			new_platform = platform_scene[1].instantiate()
-		elif new_type == 2:
+		elif new_type == 2: # 2 = cloud_platform
 			new_platform = platform_scene[2].instantiate()
 			new_platform.delete_object.connect(self.delete_object)
-		elif new_type == 3:
+		elif new_type == 3: # 3 = enemy
 			if last_was_enemy == false:
 				new_platform = platform_scene[3].instantiate()
 				last_was_enemy = true
@@ -74,5 +95,8 @@ func delete_object(obstacle):
 	
 
 func _on_platform_cleaner_body_entered(body):
-		body.queue_free() #A plataforma é removida
-		level_generator(1) #cria uma plataforma nova mais acima
+	if body.is_in_group("player"):
+		get_tree().reload_current_scene()
+	elif body.is_in_group("platform") or body.is_in_group("enemies"):
+		body.queue_free() 
+		level_generator(1) 
