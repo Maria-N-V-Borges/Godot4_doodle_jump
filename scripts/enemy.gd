@@ -21,7 +21,9 @@ func _process(delta):
 	if position.x > screen_size.x or position.x < 0:
 		direction *= -1
 		anim.flip_h = !anim.flip_h
-		
+func die():
+	queue_free()
+
 # Player pisa na cabeça
 func _on_head_entered(body):
 	if not body.is_in_group("player"):
@@ -29,7 +31,7 @@ func _on_head_entered(body):
 	
 	# força o pulo do player
 	body.velocity.y = bounce_force
-	queue_free()
+	die()
 	
 #Player encosta no corpo
 func _on_body_entered(body):
