@@ -40,4 +40,3 @@ func _on_body_entered(body):
 		
 	body.game_over()
 	
-
