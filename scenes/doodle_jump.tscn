@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://c86668qka706y"]
+
+[ext_resource type="PackedScene" uid="uid://uwbqx3pf5v35" path="res://actors/player_blue.tscn" id="1_aufk5"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_g0ds2"]
+[ext_resource type="PackedScene" uid="uid://c5v3xjtr2e6v5" path="res://plataforms/platform.tscn" id="2_eegqk"]
+[ext_resource type="PackedScene" uid="uid://bmh57tc660lux" path="res://plataforms/spring_platform.tscn" id="3_dnq6u"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="4_62lmv"]
+[ext_resource type="PackedScene" uid="uid://dykr3w4505vqx" path="res://plataforms/cloud_platform.tscn" id="4_hrq8i"]
+[ext_resource type="FontFile" uid="uid://cukmy1ix777ma" path="res://fonts/Kenney Pixel.ttf" id="7_ljlyh"]
+[ext_resource type="PackedScene" uid="uid://c43inromkl8gm" path="res://actors/enemy.tscn" id="8_b4s8s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li5if"]
+size = Vector2(179, 20)
+
+[sub_resource type="FontVariation" id="FontVariation_mk50a"]
+base_font = ExtResource("7_ljlyh")
+
+[node name="doodle_jump" type="Node2D"]
+script = ExtResource("1_g0ds2")
+platform_scene = Array[PackedScene]([ExtResource("2_eegqk"), ExtResource("3_dnq6u"), ExtResource("4_hrq8i"), ExtResource("8_b4s8s")])
+
+[node name="platform_container" type="Node2D" parent="."]
+
+[node name="platform" parent="platform_container" instance=ExtResource("2_eegqk")]
+position = Vector2(90, 280)
+
+[node name="player" parent="." instance=ExtResource("1_aufk5")]
+position = Vector2(90, 160)
+collision_mask = 14
+
+[node name="camera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(90, 160)
+limit_smoothed = true
+script = ExtResource("4_62lmv")
+player = NodePath("../player")
+
+[node name="platform_cleaner" type="Area2D" parent="camera"]
+collision_layer = 8
+collision_mask = 7
+
+[node name="collision" type="CollisionShape2D" parent="camera/platform_cleaner"]
+position = Vector2(0.5, 182)
+shape = SubResource("RectangleShape2D_li5if")
+
+[node name="score" type="Label" parent="camera"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -148.0
+offset_right = 20.0
+offset_bottom = -118.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0.45098, 0.615686, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("FontVariation_mk50a")
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="camera/platform_cleaner" to="." method="_on_platform_cleaner_body_entered"]

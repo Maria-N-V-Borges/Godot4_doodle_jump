@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c86668qka706y"]
+
+[ext_resource type="PackedScene" uid="uid://uwbqx3pf5v35" path="res://actors/player_blue.tscn" id="1_aufk5"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_yt2d0"]
+
+[node name="doodle_jump" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_aufk5")]
+position = Vector2(90, 160)
+script = ExtResource("2_yt2d0")

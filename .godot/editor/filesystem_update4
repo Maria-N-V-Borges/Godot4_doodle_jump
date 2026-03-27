@@ -1,0 +1,7 @@
+res://scenes/doodle_jump.tscn
+res://scripts/camera.gd
+res://actors/player_blue.tscn
+res://plataforms/platform.tscn
+res://plataforms/cloud_platform.tscn
+res://plataforms/spring_platform.tscn
+res://actors/enemy.tscn

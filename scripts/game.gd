@@ -1,0 +1,102 @@
+extends Node2D
+
+@onready var platform_container = $platform_container
+@onready var first_platform = $platform_container/platform
+@onready var platform_initial_position_y = first_platform.position.y
+
+@export var platform_scene: Array [PackedScene] = []
+@export var y_spacing: float = 100 #Distância vertical média entre plataformas (mais estética)
+@export var num_platforms: int = 10 #Quantidades de plataformas
+
+@onready var screen_size = get_viewport().get_visible_rect().size
+
+@onready var score_label = $camera/score #score_label facilita o uso no código
+var start_y := 0.0
+
+var last_y: float
+var last_x = -9999.0
+var min_horizontal_distance = 60.0
+
+var last_was_enemy := false
+
+var clouds_enabled := false
+var enemies_enabled := false
+
+func _ready():
+	randomize()
+	last_y = platform_initial_position_y
+	level_generator(num_platforms) #Gera a quantidde inicial de plataformas
+	
+	start_y = $player.position.y
+	$player.connect("height_changed", Callable(self, "_on_player_height_changed"))
+	#Sempre que o player emitir height_changed, essa função será chamada
+
+	# new_y vem do sinal
+	# É a nova maior altura do player
+func _on_player_height_changed(new_y): 
+	var distance = start_y - new_y #Quanto mais sobe → maior score. Nunca diminui
+	var score = int(distance) #Converte para inteiro. Score não precisa de casas decimais
+	score_label.text = str(score) #Atualiza o Label na tela
+	
+	# Ativa nuvens
+	if score >= 500 and not clouds_enabled:
+		clouds_enabled = true
+		print("Nuvens liberadas!")
+		
+	# Ativa inimigos
+	if score >= 1000 and not enemies_enabled:
+		enemies_enabled = true
+		print("Inimigos liberados!")
+	
+func level_generator(amount: int):
+	for i in range(amount):
+		var new_type = randi() % 4
+		
+		# Bloqueia nuvens antes de 500 pontos
+		if new_type == 2 and not clouds_enabled:
+			new_type = 0
+		
+		# Bloqueia inimigos antes de 1000 pontos
+		if new_type == 3 and not enemies_enabled:
+			new_type = 0
+		
+		# sobe a plataforma (números negativos sobem)
+		last_y -= randf_range(36.0, 54.0)
+		
+		var x = randf_range(20.0, 160.0)
+		
+		var new_platform 
+		
+		if new_type == 0: # 0 = plataforma normal
+			new_platform = platform_scene[0].instantiate()
+		elif new_type == 1: # 1 = spring_platform
+			new_platform = platform_scene[1].instantiate()
+		elif new_type == 2: # 2 = cloud_platform
+			new_platform = platform_scene[2].instantiate()
+			new_platform.delete_object.connect(self.delete_object)
+		elif new_type == 3: # 3 = enemy
+			if last_was_enemy == false:
+				new_platform = platform_scene[3].instantiate()
+				last_was_enemy = true
+			else: 
+				new_platform = platform_scene[0].instantiate()
+				last_was_enemy = false
+			
+		if new_type != null:
+			new_platform.position = Vector2(x, last_y)
+			platform_container.call_deferred("add_child", new_platform) #Use call_deferred para evitar bugs cso algum nó esteja sendo remido no mesmo frame
+
+func delete_object(obstacle):
+	if obstacle.is_in_group("player"):
+		print("foi o player")
+	elif obstacle.is_in_group("platform") or obstacle.is_in_group("enemies"):
+		obstacle.queue_free()
+		level_generator(1)	
+	
+
+func _on_platform_cleaner_body_entered(body):
+	if body.is_in_group("player"):
+		get_tree().reload_current_scene()
+	elif body.is_in_group("platform") or body.is_in_group("enemies"):
+		body.queue_free() 
+		level_generator(1) 
