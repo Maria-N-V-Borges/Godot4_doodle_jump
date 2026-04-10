@@ -88,7 +88,7 @@ func level_generator(amount: int):
 
 func delete_object(obstacle):
 	if obstacle.is_in_group("player"):
-		print("foi o player")
+		get_tree().change_scene_to_file("res://scenes/tittle_screen.tscn") 
 	elif obstacle.is_in_group("platform") or obstacle.is_in_group("enemies"):
 		obstacle.queue_free()
 		level_generator(1)	
@@ -96,7 +96,8 @@ func delete_object(obstacle):
 
 func _on_platform_cleaner_body_entered(body):
 	if body.is_in_group("player"):
-		get_tree().reload_current_scene()
+		#get_tree().reload_current_scene()
+		get_tree().change_scene_to_file("res://scenes/tittle_screen.tscn") 
 	elif body.is_in_group("platform") or body.is_in_group("enemies"):
 		body.queue_free() 
 		level_generator(1) 

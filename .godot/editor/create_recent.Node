@@ -1,9 +1,13 @@
+Label
+TouchScreenButton
+HBoxContainer
+TextureRect
+VBoxContainer
 CollisionShape2D
 Area2D
 Node2D
 CharacterBody2D
 StaticBody2D
 AnimatedSprite2D
-Label
 Sprite2D
 Camera2D

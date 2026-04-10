@@ -1,11 +1,11 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1774640372
+::res://::1775667561
 icon.svg::CompressedTexture2D::199904006768247562::1752078672::1752078686::1::::<><><>0<>0<>f1863a908f2b59d055d2fa93b18ece0e<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1774640270::0::1::::<><><>0<>0<><>::
-::res://actors/::1774638374
+::res://actors/::1774648097
 enemy.tscn::PackedScene::6866630276348983764::1768572688::0::1::::<><><>0<>0<><>::res://scripts/enemy.gd<>uid://crw4n2nxt5ag3::::res://assets/Tiles/Characters/tile_0024.png<>uid://calf2qty67w5j::::res://assets/Tiles/Characters/tile_0025.png<>uid://weq5yy8o2nfn::::res://assets/Tiles/Characters/tile_0026.png
-player_blue.tscn::PackedScene::1449283725026201930::1768572688::0::1::::<><><>0<>0<><>::res://scripts/player.gd<>uid://dxdat1fp5l6yt::::res://assets/Tiles/Characters/tile_0003.png<>uid://cswcxhrwrg1k0::::res://assets/Tiles/Characters/tile_0002.png
-::res://assets/::1774641902
+player_blue.tscn::PackedScene::1449283725026201930::1774648097::0::1::::<><><>0<>0<><>::uid://dp2elv6ga6bnm::::res://scripts/player.gd<>uid://dxdat1fp5l6yt::::res://assets/Tiles/Characters/tile_0003.png<>uid://cswcxhrwrg1k0::::res://assets/Tiles/Characters/tile_0002.png
+::res://assets/::1774641914
 btn_left-normal.png::CompressedTexture2D::7335705261881197162::1774641051::1774641913::1::::<><><>0<>0<>e70c39ee0c2a68fdeb944eedb67658a2<>res://.godot/imported/btn_left-normal.png-f83c1af7827f9743c2849ab39fa947dd.ctex::
 btn_left-pressed.png::CompressedTexture2D::4097998383759617486::1774641051::1774641913::1::::<><><>0<>0<>7b63654175187d14a6111990fd6e27b1<>res://.godot/imported/btn_left-pressed.png-7e855e81c9e1d6fd4246612a61cf1a4b.ctex::
 btn_pause-normal.png::CompressedTexture2D::3460002299331729126::1774641051::1774641913::1::::<><><>0<>0<>ec31fa9799c6b0b1f2c6916f53ee4dfd<>res://.godot/imported/btn_pause-normal.png-9cd61f723baef14bae3ca4514294358c.ctex::
@@ -267,9 +267,10 @@ Kenney Pixel.ttf::FontFile::6198034859708974328::1766433534::1766433552::1::::<>
 cloud_platform.tscn::PackedScene::8865521468749751435::1768572688::0::1::::<><><>0<>0<><>::uid://dpuwwmmmwq7rt::::res://assets/Tiles/tile_0153.png<>res://scripts/cloud_platform.gd<>uid://b7qkcmm3cj3l4::::res://assets/Tiles/tile_0155.png
 platform.tscn::PackedScene::6923600261289814804::1768572688::0::1::::<><><>0<>0<><>::res://scripts/platform.gd<>uid://5bjisqmwyaei::::res://assets/Tiles/tile_0001.png<>uid://csyb6l52ekyed::::res://assets/Tiles/tile_0003.png
 spring_platform.tscn::PackedScene::3245017109300040835::1768572688::0::1::::<><><>0<>0<><>::uid://ck2s33yyrkv12::::res://assets/Tiles/tile_0000.png<>res://scripts/spring_platform.gd<>uid://b8fkri8j2xsf2::::res://assets/Tiles/tile_0107.png<>uid://bkq25iuh843il::::res://assets/Tiles/tile_0108.png
-::res://scenes/::1774638374
+::res://scenes/::1775583713
 doodle_jump.tscn::PackedScene::7155008262647003354::1768572688::0::1::::<><><>0<>0<><>::uid://uwbqx3pf5v35::::res://actors/player_blue.tscn<>res://scripts/game.gd<>uid://c5v3xjtr2e6v5::::res://plataforms/platform.tscn<>uid://bmh57tc660lux::::res://plataforms/spring_platform.tscn<>res://scripts/camera.gd<>uid://dykr3w4505vqx::::res://plataforms/cloud_platform.tscn<>uid://cukmy1ix777ma::::res://fonts/Kenney Pixel.ttf<>uid://c43inromkl8gm::::res://actors/enemy.tscn
-::res://scripts/::1774640520
+tittle_screen.tscn::PackedScene::9078463846148752856::1775583713::0::1::::<><><>0<>0<><>::uid://drbpwrjpc23qn::::res://assets/logo-doodle-jump.png<>uid://b0ml700mkmyvd::::res://scripts/tittle_screen.gd<>uid://c38trlstr603j::::res://assets/btn_play-normal.png<>uid://dtlunx8a1x1v1::::res://assets/btn_play-pressed.png<>uid://blotldcuy5p5h::::res://assets/btn_quit-normal.png<>uid://djbo4jg8eno7w::::res://assets/btn_quit-pressed.png<>uid://cukmy1ix777ma::::res://fonts/Kenney Pixel.ttf
+::res://scripts/::1775583708
 camera.gd::GDScript::7818254661394447872::1768572574::0::1::::<>Camera2D<><>0<>0<><>::
 cloud_platform.gd::GDScript::5667983127665515674::1774640520::0::1::::<>StaticBody2D<><>0<>0<><>::
 enemy.gd::GDScript::7583848815360527128::1774640520::0::1::::<>Node2D<><>0<>0<><>::
@@ -277,3 +278,4 @@ game.gd::GDScript::8130222569966539084::1768571838::0::1::::<>Node2D<><>0<>0<><>
 platform.gd::GDScript::7861007645670453956::1765388232::0::1::::<>StaticBody2D<><>0<>0<><>::
 player.gd::GDScript::8268096567866545090::1768425052::0::1::::<>CharacterBody2D<><>0<>0<><>::
 spring_platform.gd::GDScript::6599023863961427623::1765396368::0::1::::<>StaticBody2D<><>0<>0<><>::
+tittle_screen.gd::GDScript::4166640692280968301::1775583708::0::1::::<>Control<><>0<>0<><>::

@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://d2lw8c8kvnrcy"]
+
+[ext_resource type="Texture2D" uid="uid://drbpwrjpc23qn" path="res://assets/logo-doodle-jump.png" id="1_frxte"]
+[ext_resource type="Script" uid="uid://b0ml700mkmyvd" path="res://scripts/tittle_screen.gd" id="1_n8no7"]
+[ext_resource type="Texture2D" uid="uid://c38trlstr603j" path="res://assets/btn_play-normal.png" id="2_nl8w5"]
+[ext_resource type="Texture2D" uid="uid://dtlunx8a1x1v1" path="res://assets/btn_play-pressed.png" id="3_3vufi"]
+[ext_resource type="Texture2D" uid="uid://blotldcuy5p5h" path="res://assets/btn_quit-normal.png" id="4_n8no7"]
+[ext_resource type="Texture2D" uid="uid://djbo4jg8eno7w" path="res://assets/btn_quit-pressed.png" id="5_b4krm"]
+[ext_resource type="FontFile" uid="uid://cukmy1ix777ma" path="res://fonts/Kenney Pixel.ttf" id="6_3vufi"]
+
+[sub_resource type="FontVariation" id="FontVariation_n8no7"]
+base_font = ExtResource("6_3vufi")
+
+[node name="tittle-screen" type="Control" unique_id=1319734062]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n8no7")
+
+[node name="main" type="VBoxContainer" parent="." unique_id=299406086]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="game-title" type="TextureRect" parent="main" unique_id=313915597]
+custom_minimum_size = Vector2(180, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("1_frxte")
+expand_mode = 1
+
+[node name="buttons" type="HBoxContainer" parent="main/game-title" unique_id=1469125605]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 0
+offset_left = 27.0
+offset_top = 107.0
+offset_right = 154.0
+offset_bottom = 157.0
+
+[node name="start-btn" type="TouchScreenButton" parent="main/game-title/buttons" unique_id=2125706011]
+position = Vector2(22, 6)
+texture_normal = ExtResource("2_nl8w5")
+texture_pressed = ExtResource("3_3vufi")
+
+[node name="quit-btn" type="TouchScreenButton" parent="main/game-title/buttons" unique_id=624651047]
+position = Vector2(60, 5)
+texture_normal = ExtResource("4_n8no7")
+texture_pressed = ExtResource("5_b4krm")
+
+[node name="highscore" type="Label" parent="main/game-title" unique_id=1284935488]
+layout_mode = 0
+offset_top = 156.0
+offset_right = 180.0
+offset_bottom = 179.0
+size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = SubResource("FontVariation_n8no7")
+theme_override_font_sizes/font_size = 26
+text = "HIGHSCORE:"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="main/game-title/buttons/start-btn" to="." method="_on_startbtn_pressed"]
+[connection signal="pressed" from="main/game-title/buttons/quit-btn" to="." method="_on_quitbtn_pressed"]

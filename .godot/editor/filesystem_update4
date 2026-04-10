@@ -1,2 +1,3 @@
-res://scripts/cloud_platform.gd
-res://scripts/enemy.gd
+res://scenes/tittle_screen.tscn
+res://scripts/tittle_screen.gd
+res://scripts/game.gd
